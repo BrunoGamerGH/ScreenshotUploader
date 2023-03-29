@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "screenshotuploader",
+  "version": "${version}",
+
+  "name": "ScreenshotUploader",
+  "description": "Better screenshotting",
+  "authors": [
+    "Bruno", "Screenshot to Clipboard"
+  ],
+  "contact": {
+    "sources": "https://github.com/BrunoGamerGH/NAME_HERE",
+    "issues": "https://github.com/BrunoGamerGH/NAME_HERE/issues"
+  },
+
+  "license": "CC0-1.0",
+  "icon": "assets/screenshotuploader/icon.png",
+
+  "environment": "client",
+  "entrypoints": {
+    "main": [
+      "me.bruno.screenshotuploader.ScreenshotUploader"
+    ]
+  },
+  "mixins": [
+    "screenshotuploader.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.14.11",
+    "fabric-api": "*",
+    "minecraft": "~1.19.3",
+    "java": ">=17"
+  }
+}
