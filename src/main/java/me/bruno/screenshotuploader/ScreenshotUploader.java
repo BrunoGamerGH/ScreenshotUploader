@@ -41,7 +41,7 @@ public class ScreenshotUploader implements ModInitializer {
 			if (hasImage(name)) {
 				NativeImage image = getImage(name);
 				ClipboardUtil.copy(image);
-				source.sendMessage(Text.literal("Copied screenshot."));
+				source.getPlayer().sendMessage(Text.literal("Copied screenshot."));
 			}
 		}
 	}

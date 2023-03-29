@@ -20,13 +20,17 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.io.File;
 import java.lang.reflect.Field;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.function.Consumer;
 
 @Mixin(ScreenshotRecorder.class)
 public class ScreeenShotRecorderMixin {
     private static final Logger LOGGER = LogUtils.getLogger();
+    private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss");
     private static File getScreenshotFilename(File directory) {
-        String string = Util.getFormattedCurrentTime();
+        String string = DATE_FORMAT.format(new Date());
         int i = 1;
 
         while(true) {

@@ -26,7 +26,7 @@ public class CopyScreenshotCommand {
                 ScreenshotUploader.getInstance().copyImageToClipboard(source, name);
                 return 1;
             } else {
-                source.sendMessage(Text.literal("Screenshot name doesn't exist"));
+                source.getPlayer().sendMessage(Text.literal("Screenshot name doesn't exist"));
                 return 0;
             }
         } catch (Exception e) {
