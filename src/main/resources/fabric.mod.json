@@ -13,12 +13,12 @@
     "issues": "https://github.com/BrunoGamerGH/NAME_HERE/issues"
   },
 
-  "license": "CC0-1.0",
+  "license": "MIT",
   "icon": "assets/screenshotuploader/icon.png",
 
   "environment": "client",
   "entrypoints": {
-    "main": [
+    "client": [
       "me.bruno.screenshotuploader.ScreenshotUploader"
     ]
   },
@@ -28,8 +28,6 @@
 
   "depends": {
     "fabricloader": ">=0.14.11",
-    "fabric-api": "*",
-    "minecraft": "~1.19",
-    "java": ">=17"
+    "minecraft": ">=1.19"
   }
 }

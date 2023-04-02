@@ -4,12 +4,12 @@
   "package": "me.bruno.screenshotuploader.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "ScreeenShotRecorderMixin"
   ],
   "injectors": {
     "defaultRequire": 1
   },
   "client": [
+    "ScreeenShotRecorderMixin",
     "AWTHackMixin",
     "NativeImagePointerAccessor"
   ]
