@@ -1,7 +1,7 @@
 package me.bruno.screenshotuploader;
 
 import me.bruno.screenshotuploader.commands.CopyScreenshotCommand;
-import net.fabricmc.api.ModInitializer;
+import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.texture.NativeImage;
@@ -14,7 +14,7 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ScreenshotUploader implements ModInitializer {
+public class ScreenshotUploader implements ClientModInitializer {
 	// This logger is used to write text to the console and the log file.
 	// It is considered best practice to use your mod id as the logger's name.
 	// That way, it's clear which mod wrote info, warnings, and errors.
@@ -51,7 +51,7 @@ public class ScreenshotUploader implements ModInitializer {
 	}
 
 	@Override
-	public void onInitialize() {
+	public void onInitializeClient() {
 		instance = this;
 		imageMap = new HashMap<>();
 		try {

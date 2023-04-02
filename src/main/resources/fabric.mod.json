@@ -9,8 +9,8 @@
     "Bruno", "Screenshot to Clipboard"
   ],
   "contact": {
-    "sources": "https://github.com/BrunoGamerGH/NAME_HERE",
-    "issues": "https://github.com/BrunoGamerGH/NAME_HERE/issues"
+    "sources": "https://github.com/BrunoGamerGH/ScreenshotUploader",
+    "issues": "https://github.com/BrunoGamerGH/ScreenshotUploader/issues"
   },
 
   "license": "CC0-1.0",
@@ -18,7 +18,7 @@
 
   "environment": "client",
   "entrypoints": {
-    "main": [
+    "client": [
       "me.bruno.screenshotuploader.ScreenshotUploader"
     ]
   },
@@ -28,8 +28,6 @@
 
   "depends": {
     "fabricloader": ">=0.14.11",
-    "fabric-api": "*",
-    "minecraft": "~1.19.3",
-    "java": ">=17"
+    "minecraft": ">=1.19.3"
   }
 }
