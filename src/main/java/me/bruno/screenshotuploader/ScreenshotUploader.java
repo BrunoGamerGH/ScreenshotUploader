@@ -1,18 +1,15 @@
 package me.bruno.screenshotuploader;
 
-import me.bruno.screenshotuploader.commands.CopyScreenshotCommand;
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.texture.NativeImage;
-import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.awt.*;
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,13 +34,17 @@ public class ScreenshotUploader implements ClientModInitializer {
 		return imageMap.getOrDefault(name, null);
 	}
 
-	public void copyImageToClipboard(ServerCommandSource source, String name) {
+	public void copyImageToClipboard(ClientPlayerEntity source, String name) {
 		MinecraftClient client = MinecraftClient.getInstance();
 		if (client.player != null || client.isInSingleplayer() || client.isIntegratedServerRunning() || client.player.getServer() != null) {
 			if (hasImage(name)) {
 				NativeImage image = getImage(name);
-				ClipboardUtil.copy(image);
-				source.getPlayer().sendMessage(Text.literal("Copied screenshot."));
+				if (MinecraftClient.IS_SYSTEM_MAC) {
+					MacOSCompat.doCopyMacOS(new File(MinecraftClient.getInstance().runDirectory, name).getPath());
+				} else {
+					ClipboardUtil.copy(image);
+				}
+				source.sendMessage(Text.literal("Copied screenshot."));
 			}
 		}
 	}
@@ -61,7 +62,6 @@ public class ScreenshotUploader implements ClientModInitializer {
 		} catch (HeadlessException e) {
 			LOGGER.warn("java.awt.headless property was not set properly!");
 		}
-		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> CopyScreenshotCommand.register(dispatcher));
 	}
 }
 

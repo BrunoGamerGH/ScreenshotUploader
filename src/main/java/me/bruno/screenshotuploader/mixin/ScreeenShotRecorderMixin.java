@@ -1,8 +1,12 @@
 package me.bruno.screenshotuploader.mixin;
 
 import com.mojang.logging.LogUtils;
+import me.bruno.screenshotuploader.ScreenshotSaveClickEvent;
 import me.bruno.screenshotuploader.ScreenshotUploader;
+import net.fabricmc.fabric.api.event.Event;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gl.Framebuffer;
+import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.texture.NativeImage;
 import net.minecraft.client.util.ScreenshotRecorder;
 import net.minecraft.text.ClickEvent;
@@ -69,12 +73,10 @@ public class ScreeenShotRecorderMixin {
                             .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Text.literal(file2.getName()))));
                     main.append(open);
                     main.append(" ");
-                    String command = "/copylatestscreenshot " + file2.getName();
                     Text copy = Text.literal("[COPY]").formatted(Formatting.BOLD, Formatting.BLUE).styled(style -> style
-                            .withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, command))
+                            .withClickEvent(new ScreenshotSaveClickEvent(file2.getName()))
                             .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Text.literal("Copy the screenshot"))));
                     main.append(copy);
-
                     messageReceiver.accept(main);
                 } catch (Exception var7) {
                     LOGGER.warn("Couldn't save screenshot", var7);
