@@ -1,11 +1,9 @@
 package me.bruno.screenshotuploader;
 
-import me.bruno.screenshotuploader.commands.CopyScreenshotCommand;
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.texture.NativeImage;
-import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +33,7 @@ public class ScreenshotUploader implements ClientModInitializer {
 		return imageMap.getOrDefault(name, null);
 	}
 
-	public void copyImageToClipboard(ServerCommandSource source, String name) {
+	public void copyImageToClipboard(ClientPlayerEntity source, String name) {
 		MinecraftClient client = MinecraftClient.getInstance();
 		if (client.player != null || client.isInSingleplayer() || client.isIntegratedServerRunning() || client.player.getServer() != null) {
 			if (hasImage(name)) {
@@ -59,7 +57,6 @@ public class ScreenshotUploader implements ClientModInitializer {
 		} catch (HeadlessException e) {
 			LOGGER.warn("java.awt.headless property was not set properly!");
 		}
-		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> CopyScreenshotCommand.register(dispatcher));
 	}
 }
 
