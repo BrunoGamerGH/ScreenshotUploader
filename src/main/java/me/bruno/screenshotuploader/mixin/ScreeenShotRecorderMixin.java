@@ -52,7 +52,7 @@ public class ScreeenShotRecorderMixin {
             } else {
                 file2 = new File(file, fileName);
             }
-            ScreenshotUploader.getInstance().addImage(file2.getName(), nativeImage);
+            ScreenshotUploader.getInstance().addImage(file2, nativeImage);
 
             Util.getIoWorkerExecutor().execute(() -> {
                 try {
@@ -67,7 +67,7 @@ public class ScreeenShotRecorderMixin {
                     main.append(open);
                     main.append(" ");
                     Text copy = Text.literal("[COPY]").formatted(Formatting.BOLD, Formatting.BLUE).styled(style -> style
-                            .withClickEvent(new ScreenshotSaveClickEvent(file2.getName()))
+                            .withClickEvent(new ScreenshotSaveClickEvent(file2))
                             .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Text.literal("Copy the screenshot"))));
                     main.append(copy);
 

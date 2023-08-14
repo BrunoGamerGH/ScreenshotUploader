@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.awt.*;
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,18 +20,18 @@ public class ScreenshotUploader implements ClientModInitializer {
 	public static final Logger LOGGER = LoggerFactory.getLogger("screenshotuploader");
 	private static ScreenshotUploader instance;
 
-	private Map<String, NativeImage> imageMap;
+	private Map<File, NativeImage> imageMap;
 
 	public static ScreenshotUploader getInstance() {
 		return instance;
 	}
 
-	public void addImage(String name, NativeImage image) {
-		imageMap.put(name, image);
+	public void addImage(File file, NativeImage image) {
+		imageMap.put(file, image);
 	}
 
 	public NativeImage getImage(String name) {
-		return imageMap.getOrDefault(name, null);
+		return imageMap.getOrDefault(imageMap.keySet().stream().filter(file -> file.getName().equals(name)).findFirst().orElse(null), null);
 	}
 
 	public void copyImageToClipboard(ClientPlayerEntity source, String name) {
@@ -38,6 +39,9 @@ public class ScreenshotUploader implements ClientModInitializer {
 		if (client.player != null || client.isInSingleplayer() || client.isIntegratedServerRunning() || client.player.getServer() != null) {
 			if (hasImage(name)) {
 				NativeImage image = getImage(name);
+				if (MinecraftClient.IS_SYSTEM_MAC) {
+					MacOSCompat.doCopyMacOS(getFileFromName(name).getPath());
+				}
 				ClipboardUtil.copy(image);
 				source.sendMessage(Text.literal("Copied screenshot."));
 			}
@@ -45,7 +49,11 @@ public class ScreenshotUploader implements ClientModInitializer {
 	}
 
 	public boolean hasImage(String name) {
-		return imageMap.containsKey(name);
+		return imageMap.keySet().stream().anyMatch(file -> file.getName().equals(name));
+	}
+
+	public File getFileFromName(String name) {
+		return imageMap.keySet().stream().filter(file -> file.getName().equals(name)).findFirst().orElse(null);
 	}
 
 	@Override
